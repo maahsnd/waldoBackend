@@ -1,9 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-/* GET home page. */
-router.get('/', function (req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+/* Route to start game
+Return image, log start time*/
+router.get('/game');
+
+/* Route to check coords
+Compare coordinates to DB
+Return response */
+router.post('/coords');
+
+/* Route to submit user name to scores */
+router.post('/scores');
+
+/* Route to fetch top three scores*/
+router.get('/scores');
 
 module.exports = router;
