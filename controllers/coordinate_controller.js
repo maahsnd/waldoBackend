@@ -28,7 +28,7 @@ exports.check_coordinates = asyncHandler(async (req, res, next) => {
 
   const currentGame = await CurrentGame.findById(req.body.gameId).exec();
   //click coordinates already found
-  if (currentGame.found_markers.includes(match.character)) {
+  if (currentGame.found_markers.includes(req.body.character)) {
     console.error('Already found');
     res.json({
       found: false,
@@ -38,6 +38,7 @@ exports.check_coordinates = asyncHandler(async (req, res, next) => {
   }
 
   const foundArr = currentGame.found_markers;
+  console.log('game: ' + currentGame);
   //click is the last location to be found (win)
   if (foundArr.length === currentGame.all_markers.length - 1) {
     res.json({
@@ -47,11 +48,16 @@ exports.check_coordinates = asyncHandler(async (req, res, next) => {
     return;
   }
   //else click is found
+  console.log(req.body.character);
   const updatedGame = {
-    found_markers: [...foundArr, match.character]
+    _id: currentGame._id,
+    all_markers: currentGame.all_markers,
+    found_markers: [...foundArr, req.body.character],
+    time: currentGame.time
   };
+  console.log(updatedGame);
 
-  await CurrentGame.findByIdAndUpdate(req.params.id, updatedGame, {});
+  await CurrentGame.findByIdAndUpdate(req.body.gameId, updatedGame, {});
   res.json({
     found: true,
     win: false
