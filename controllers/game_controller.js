@@ -12,7 +12,7 @@ exports.load_game = asyncHandler(async (req, res, next) => {
     const characters = game[0].locations.map((location) => {
       return location.character;
     });
-    const newGame = new CurrentGame({});
+    const newGame = new CurrentGame({ all_markers: characters });
     await newGame.save();
     res
       .status(200)
