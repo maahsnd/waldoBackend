@@ -5,8 +5,10 @@ const Schema = mongoose.Schema;
 const LocationSchema = new Schema({
   character: { type: String, required: true, maxLength: 40 },
   coords: {
-    x: { type: Number, required: true },
-    y: { type: Number, required: true }
+    x_max: { type: Number, required: true },
+    x_min: { type: Number, required: true },
+    y_max: { type: Number, required: true },
+    y_min: { type: Number, required: true }
   }
 });
 
