@@ -13,12 +13,12 @@ router.get('/games/:name', game_controller.load_game);
 /* Route to check coords
 Compare coordinates to DB
 Return response */
-router.post('/coords');
+router.post('/games/:name/coords', coord_controller.check_coordinates);
 
 /* Route to submit user name to scores */
-router.post('/scores');
+router.post('/games/:name/scores');
 
 /* Route to fetch top three scores*/
-router.get('/scores');
+router.get('/games/:name/scores');
 
 module.exports = router;
