@@ -8,9 +8,10 @@ exports.load_game = asyncHandler(async (req, res, next) => {
     const game = await Game.find({ name: req.params.name })
       .populate('locations')
       .exec();
-    res
-      .status(200)
-      .json({ img_link: game[0].img_link, locations: game[0].locations });
+    const characters = game[0].locations.map((location) => {
+      return location.character;
+    });
+    res.status(200).json({ img_link: game[0].img_link, characters });
   } catch (err) {
     console.log('error' + err);
   }
