@@ -4,11 +4,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const dotenv = require('dotenv').config();
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
-
-const app = express();
-app.use(express.json());
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
@@ -16,6 +14,10 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(process.env.MONGO);
 }
+
+const app = express();
+app.use(cors({ origin: '*' }));
+app.use(express.json());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -38,7 +40,7 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.send({ err });
 });
 
 module.exports = app;
