@@ -2,6 +2,7 @@ const dotenv = require('dotenv').config();
 
 const Game = require('./models/game');
 const Location = require('./models/location');
+const Score = require('./models/score');
 
 const locations = [];
 
@@ -16,6 +17,7 @@ async function main() {
   console.log('Debug: Should be connected?');
   await createLocations();
   await createGame();
+  await createScores();
 
   console.log('Debug: Closing mongoose');
   mongoose.connection.close();
@@ -47,6 +49,16 @@ async function gameCreate(name, img_link) {
   console.log(`Added game: ${name}`);
 }
 
+async function scoreCreate(name) {
+  const score = new Score({
+    name,
+    time: Date.now()
+  });
+  await score.save();
+
+  console.log(`Added score: ${name}`);
+}
+
 async function createLocations() {
   console.log('Adding locations');
   await Promise.all([
@@ -64,4 +76,14 @@ async function createGame() {
     'Wheres waldo',
     'https://res.cloudinary.com/dscsiijis/image/upload/v1697566248/waldo_1_lmlk1d.jpg'
   );
+}
+
+async function createScores() {
+  console.log('Adding scores');
+  await Promise.all([
+    scoreCreate('jaa'),
+    scoreCreate('laa'),
+    scoreCreate('faa'),
+    scoreCreate('raa')
+  ]);
 }
