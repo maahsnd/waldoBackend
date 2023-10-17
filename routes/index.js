@@ -1,9 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const coord_controller = require('../controllers/coordinate_controller');
+const game_controller = require('../controllers/game_controller');
 
+router.get('/', function (req, res) {
+  res.redirect('/game');
+});
 /* Route to start game
 Return image, log start time*/
-router.get('/game');
+router.get('/game', game_controller.load_game);
 
 /* Route to check coords
 Compare coordinates to DB
