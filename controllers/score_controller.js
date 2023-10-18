@@ -4,7 +4,7 @@ const Score = require('../models/score');
 
 exports.get_scores = asyncHandler(async (req, res, next) => {
   try {
-    const data = await Score.find({ game: req.body.game })
+    const data = await Score.find({ game: req.body.gameId })
       .sort('time')
       .limit(3)
       .exec();
