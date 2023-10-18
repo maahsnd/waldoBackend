@@ -16,7 +16,12 @@ exports.load_game = asyncHandler(async (req, res, next) => {
     await newGame.save();
     res
       .status(200)
-      .json({ img_link: game[0].img_link, characters, gameId: newGame._id });
+      .json({
+        img_link: game[0].img_link,
+        characters,
+        currentgameId: newGame._id,
+        gameId: game._id
+      });
   } catch (err) {
     console.log('error' + err);
   }
