@@ -54,7 +54,7 @@ async function gameCreate(name, img_link) {
 async function scoreCreate(name) {
   const score = new Score({
     name,
-    time: Date.now() - (Date.now() - 100000),
+    time: Date.now() - (Date.now() - 100),
     game: games[0]._id
   });
   await score.save();
@@ -76,7 +76,7 @@ async function createLocations() {
 async function createGame() {
   console.log('Adding game');
   await gameCreate(
-    'Wheres waldo',
+    'waldo',
     'https://res.cloudinary.com/dscsiijis/image/upload/v1697566248/waldo_1_lmlk1d.jpg'
   );
 }
