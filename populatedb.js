@@ -5,6 +5,7 @@ const Location = require('./models/location');
 const Score = require('./models/score');
 
 const locations = [];
+const games = [];
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false); // Prepare for Mongoose 7
@@ -44,6 +45,7 @@ async function gameCreate(name, img_link) {
     img_link,
     locations
   });
+  games.push(game);
   await game.save();
 
   console.log(`Added game: ${name}`);
@@ -52,7 +54,8 @@ async function gameCreate(name, img_link) {
 async function scoreCreate(name) {
   const score = new Score({
     name,
-    time: Date.now()
+    time: Date.now() - (Date.now() - 100000),
+    game: games[0]._id
   });
   await score.save();
 
