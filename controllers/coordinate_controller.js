@@ -3,14 +3,15 @@ const Location = require('../models/location');
 const CurrentGame = require('../models/current_game');
 
 exports.check_coordinates = asyncHandler(async (req, res, next) => {
-  const data = await Location.find(
-    {
-      character: req.body.character
-    },
-    'coords'
-  ).exec();
+  const currentGame = await CurrentGame.findById(req.body.currentgameId)
+    .populate('all_markers')
+    .exec();
   const click = req.body.coords;
-  const location = data[0].coords;
+  const name = req.body.character;
+  const found = currentGame.all_markers.find((element) => {
+    return element.character === name;
+  });
+  const location = found.coords;
 
   const match =
     location.x_min <= click.x &&
@@ -26,7 +27,6 @@ exports.check_coordinates = asyncHandler(async (req, res, next) => {
     return;
   }
 
-  const currentGame = await CurrentGame.findById(req.body.currentgameId).exec();
   //click coordinates already found
   if (currentGame.found_markers.includes(req.body.character)) {
     console.error('Already found');
