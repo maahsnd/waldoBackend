@@ -18,22 +18,21 @@ exports.get_scores = asyncHandler(async (req, res, next) => {
 
 exports.post_score = asyncHandler(async (req, res, next) => {
   try {
-    const { username, gameId, currentGameId, winTime } = req.body;
-    // Now you can use these variables in your route handler
-    //start time is Date.now() form, as is endTime
-    const currentGame = await CurrentGame.findById(currentGameId);
+    const { username, gameId, currentgameId, winTime } = req.body;
+
+    const currentGame = await CurrentGame.findByIdAndDelete(currentgameId);
     const start_time = new Date(currentGame.time);
-    //get time in seconds from miliseconds
-    const time = (winTime - start_time.getTime()) / 1000;
-    console.log(start_time.getTime(), winTime, time);
+
+    const time = Math.floor((winTime - start_time) / 1000);
+
     const newScore = new Score({
       name: req.body.username,
-      time,
+      time: time,
       game: req.body.gameId
     });
     await newScore.save();
     const data = await Score.find({ game: req.body.gameId })
-      .sort('time')
+      .sort({ time: 1 })
       .limit(3)
       .exec();
     res.json(data);
