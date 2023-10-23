@@ -22,4 +22,6 @@ router.get('/games/:name/scores', score_controller.get_scores);
 /* Route to submit user name & finish time to scores. Return new top three scores */
 router.post('/games/:name/scores', score_controller.post_score);
 
+router.post('/games/:name/scores/username', score_controller.post_username);
+
 module.exports = router;
