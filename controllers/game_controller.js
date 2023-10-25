@@ -11,7 +11,6 @@ exports.load_game = asyncHandler(async (req, res, next) => {
     const characters = game[0].locations.map((location) => {
       return location.character;
     });
-    console.log(game[0].locations);
     const newGame = new CurrentGame({
       all_markers: game[0].locations,
       time: Date.now()
