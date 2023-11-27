@@ -18,7 +18,7 @@ exports.get_scores = asyncHandler(async (req, res, next) => {
 
 exports.post_score = asyncHandler(async (req, res, next) => {
   try {
-    const { currentgameId, winTime, gameId } = req.body;
+    const { currentgameId, winTime } = req.body;
 
     const currentGame = await CurrentGame.findByIdAndDelete(currentgameId);
     const start_time = new Date(currentGame.time);
@@ -30,11 +30,7 @@ exports.post_score = asyncHandler(async (req, res, next) => {
       game: req.body.gameId
     });
     await newScore.save();
-    const data = await Score.find({ game: gameId, name: {$exists: true} })
-      .sort('time')
-      .limit(3)
-      .exec();
-    res.json(data);
+    res.json({ time: newScore.time, scoreId: newScore._id });
   } catch (err) {
     console.error(err);
   }
