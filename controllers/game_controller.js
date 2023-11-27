@@ -12,8 +12,7 @@ exports.load_game = asyncHandler(async (req, res, next) => {
       return location.character;
     });
     const newGame = new CurrentGame({
-      all_markers: game[0].locations,
-      time: Date.now()
+      all_markers: game[0].locations
     });
 
     await newGame.save();
