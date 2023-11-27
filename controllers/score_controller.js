@@ -46,8 +46,8 @@ exports.post_username = asyncHandler(async (req, res, next) => {
       _id: scoreId
     });
     await Score.findByIdAndUpdate(scoreId, newScore, {});
-    const data = await Score.find({ game: req.body.gameId })
-      .sort({ time: 1 })
+    const data = await Score.find({ game: req.body.gameId, name: {$exists: true}  })
+      .sort('time')
       .limit(3)
       .exec();
     res.json(data);
