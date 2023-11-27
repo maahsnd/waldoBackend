@@ -6,7 +6,7 @@ const logger = require('morgan');
 const dotenv = require('dotenv').config();
 const cors = require('cors');
 
-const indexRouter = require('./routes/index');
+
 
 const mongoose = require('mongoose');
 mongoose.set('strictQuery', false);
@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+const indexRouter = require('./routes/index');
 app.use('/', indexRouter);
 
 // catch 404 and forward to error handler
