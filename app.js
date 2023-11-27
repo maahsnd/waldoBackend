@@ -16,7 +16,11 @@ async function main() {
 }
 
 const app = express();
-app.use(cors());
+app.use(cors(x => x
+  .AllowAnyMethod()
+  .AllowAnyHeader()
+  .SetIsOriginAllowed(origin => true) // allow any origin
+  .AllowCredentials()));
 app.use(express.json());
 
 app.use(logger('dev'));
