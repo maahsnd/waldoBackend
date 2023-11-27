@@ -6,7 +6,7 @@ const Game = require('../models/game');
 exports.get_scores = asyncHandler(async (req, res, next) => {
   try {
     const game = await Game.find({ name: 'waldo' });
-    const data = await Score.find({ game: game[0]._id, name: {$ne: 'anonymous'} })
+    const data = await Score.find({ game: game[0]._id, name: {$exists: true} })
       .sort('time')
       .limit(3)
       .exec();
